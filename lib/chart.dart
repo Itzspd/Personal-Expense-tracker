@@ -48,7 +48,6 @@ class chart extends StatelessWidget {
       ),
       padding: const EdgeInsets.all(8),
       width: double.infinity,
-      height: MediaQuery.of(context).size.height / 3.5,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         color: Theme.of(context).primaryColorDark,
@@ -72,12 +71,14 @@ class chart extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: grouptransactionValues.map((bars) {
-          return CharBar(
-            bars['day'].toString(),
-            bars['amount'] as double,
-            totalspending == 0.0
-                ? 0.0
-                : (bars['amount'] as double) / totalspending,
+          return Expanded(
+            child: CharBar(
+              bars['day'].toString(),
+              bars['amount'] as double,
+              totalspending == 0.0
+                  ? 0.0
+                  : (bars['amount'] as double) / totalspending,
+            ),
           );
         }).toList(),
       ),

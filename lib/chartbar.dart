@@ -13,60 +13,69 @@ class CharBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        //Weekday Initial and Bars
-        Row(
-          children: [
-            SizedBox(
-              width: 30,
-              child: Text(
-                label,
-                style: Theme.of(context).appBarTheme.titleTextStyle,
+    return LayoutBuilder(builder: (ctx, constraint) {
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          //Weekday Initial and Bars
+          Row(
+            children: [
+              FittedBox(
+                child: SizedBox(
+                  width: constraint.maxWidth * 0.1,
+                  child: Text(
+                    label,
+                    textAlign: TextAlign.left,
+                    style: Theme.of(context).appBarTheme.titleTextStyle,
+                  ),
+                ),
               ),
-            ),
-            //Bars
-            SizedBox(
-                height: 12,
-                width: 220,
-                child: Stack(
-                  children: [
-                    Container(
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).primaryColorLight,
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                    ),
-                    FractionallySizedBox(
-                      widthFactor: remainingAmount,
-                      child: Container(
+              //Bars
+              SizedBox(
+                  height: constraint.maxHeight * 0.3,
+                  width: constraint.maxWidth * 0.6,
+                  child: Stack(
+                    children: [
+                      Container(
                         decoration: BoxDecoration(
-                          color: Colors.green.shade400,
+                          color: Theme.of(context).primaryColorLight,
                           borderRadius: BorderRadius.circular(20),
                         ),
                       ),
-                    ),
-                  ],
-                )),
-          ],
-        ),
-        //Amount
+                      FractionallySizedBox(
+                        widthFactor: remainingAmount,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Colors.green.shade400,
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                        ),
+                      ),
+                    ],
+                  )),
+            ],
+          ),
+          //Amount
 
-        //Todo, add a condition to add K if in thousands, M in millions and B in billions
-        FittedBox(
-          fit: BoxFit.cover,
-          child: Text(
-            '\$${spendingAmount.toStringAsFixed(2)}',
-            style: const TextStyle(
-              color: Colors.white,
-              fontSize: 15,
-              fontFamily: 'OpenSans',
-              fontWeight: FontWeight.bold,
+          //Todo, add a condition to add K if in thousands, M in millions and B in billions
+          FittedBox(
+            fit: BoxFit.cover,
+            child: Container(
+              width: constraint.maxWidth * 0.25,
+              child: Text(
+                '\$${spendingAmount.toStringAsFixed(2)}',
+                textAlign: TextAlign.right,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 15,
+                  fontFamily: 'OpenSans',
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
             ),
           ),
-        ),
-      ],
-    );
+        ],
+      );
+    });
   }
 }

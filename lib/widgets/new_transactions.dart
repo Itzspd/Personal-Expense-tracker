@@ -53,71 +53,78 @@ class _NewTransactionState extends State<NewTransaction> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(15),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(20),
-          topRight: Radius.circular(20),
+    return SingleChildScrollView(
+      child: Container(
+        padding: EdgeInsets.only(
+          top: 15,
+          right: 15,
+          left: 15,
+          bottom: MediaQuery.of(context).viewInsets.bottom + 15,
         ),
-        color: Theme.of(context).primaryColorLight,
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          TextField(
-            autocorrect: true,
-            decoration: const InputDecoration(
-              labelText: 'Title',
-            ),
-            cursorHeight: 30,
-            keyboardType: TextInputType.text,
-            controller: _titleeditingcontroller,
-            onSubmitted: (_) => _submitdata(),
-            // onChanged: (val) => titleInput = val,
+        decoration: BoxDecoration(
+          borderRadius: const BorderRadius.only(
+            topLeft: Radius.circular(20),
+            topRight: Radius.circular(20),
           ),
-          TextField(
-            autocorrect: true,
-            keyboardType: TextInputType.number,
-            decoration: const InputDecoration(
-              labelText: 'Amount',
-            ),
-            cursorHeight: 30,
-            controller: _amounteditingcontroller,
-            onSubmitted: (_) => _submitdata(),
-            //onChanged: (val) => amountInput = val,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                _selectedDate == null
-                    ? 'No date chosen'
-                    : 'Picked Date: ${DateFormat.yMMMd().format(_selectedDate!)}',
+          color: Theme.of(context).primaryColorLight,
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            TextField(
+              autocorrect: true,
+              decoration: const InputDecoration(
+                labelText: 'Title',
               ),
-              TextButton(
-                style: ButtonStyle(
-                  foregroundColor:
-                      MaterialStateProperty.all(Colors.green.shade500),
+              cursorHeight: 30,
+              keyboardType: TextInputType.text,
+              controller: _titleeditingcontroller,
+              onSubmitted: (_) => _submitdata(),
+              // onChanged: (val) => titleInput = val,
+            ),
+            TextField(
+              autocorrect: true,
+              keyboardType: TextInputType.number,
+              decoration: const InputDecoration(
+                labelText: 'Amount',
+              ),
+              cursorHeight: 30,
+              controller: _amounteditingcontroller,
+              onSubmitted: (_) => _submitdata(),
+              //onChanged: (val) => amountInput = val,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  _selectedDate == null
+                      ? 'No date chosen'
+                      : 'Picked Date: ${DateFormat.yMMMd().format(_selectedDate!)}',
                 ),
-                onPressed: _opendatapicker,
-                child: Text('Choose Date'),
-              )
-            ],
-          ),
-          TextButton(
-            style: TextButton.styleFrom(
-              backgroundColor: Colors.green.shade600,
+                TextButton(
+                  style: ButtonStyle(
+                    foregroundColor:
+                        MaterialStateProperty.all(Colors.green.shade500),
+                  ),
+                  onPressed: _opendatapicker,
+                  child: Text('Choose Date'),
+                )
+              ],
             ),
-            onPressed: _submitdata,
-            child: const Text(
-              'Submit',
-              style: TextStyle(
-                color: Colors.white,
+            TextButton(
+              style: TextButton.styleFrom(
+                backgroundColor: Colors.green.shade600,
               ),
-            ),
-          )
-        ],
+              onPressed: _submitdata,
+              child: const Text(
+                'Submit',
+                style: TextStyle(
+                  color: Colors.white,
+                ),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

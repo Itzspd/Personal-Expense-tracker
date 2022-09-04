@@ -58,36 +58,54 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+    final mediaquery = MediaQuery.of(context);
+    final appbar = AppBar(
+      centerTitle: true,
+      title: const Text(
+        'EXPENSE TRACKER',
+      ),
+      elevation: 0,
+      backgroundColor: Theme.of(context).primaryColor,
+      actions: [
+        IconButton(
+          onPressed: () => _openbottomsheettoaddnewtransactions(context),
+          icon: const Icon(
+            Icons.add,
+            size: 30,
+            color: Colors.white,
+          ),
+        )
+      ],
+    );
     return Scaffold(
       backgroundColor: Theme.of(context).primaryColor,
-      appBar: AppBar(
-        centerTitle: true,
-        title: const Text(
-          'EXPENSE TRACKER',
-        ),
-        elevation: 0,
-        backgroundColor: Theme.of(context).primaryColor,
-        actions: [
-          IconButton(
-            onPressed: () => _openbottomsheettoaddnewtransactions(context),
-            icon: const Icon(
-              Icons.add,
-              size: 30,
-              color: Colors.white,
-            ),
-          )
-        ],
-      ),
+      appBar: appbar,
       body: SingleChildScrollView(
         child: Column(
           children: [
-            //Expense chart
-            chart(_recenttransactions),
-            const SizedBox(
-              height: 50,
+            //Expense chart and chart bars.
+            SizedBox(
+                //Deducting the height chart, the appbar height and the status bar height.
+                height: (mediaquery.size.height -
+                        appbar.preferredSize.height -
+                        mediaquery.padding.top) *
+                    0.4,
+                child: chart(_recenttransactions)),
+            SizedBox(
+              height: (mediaquery.size.height -
+                      appbar.preferredSize.height -
+                      mediaquery.padding.top) *
+                  0.05,
             ),
-            //Text input for new transactions.
-            TransactionList(_usertransactions, _deletetransaction),
+            //Text input for new transactions and transaction list.
+            SizedBox(
+              //Deducting the height of the list container, the appbar height and the status bar height.
+              height: (mediaquery.size.height -
+                      appbar.preferredSize.height -
+                      mediaquery.padding.top) *
+                  0.55,
+              child: TransactionList(_usertransactions, _deletetransaction),
+            ),
           ],
         ),
       ),
