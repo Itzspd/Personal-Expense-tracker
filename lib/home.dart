@@ -83,7 +83,7 @@ class _HomeState extends State<Home> {
           children: [
             //Expense chart
             chart(_recenttransactions),
-            SizedBox(
+            const SizedBox(
               height: 50,
             ),
             //Text input for new transactions.
@@ -96,6 +96,7 @@ class _HomeState extends State<Home> {
 
   void _openbottomsheettoaddnewtransactions(BuildContext context) {
     showModalBottomSheet(
+        backgroundColor: Theme.of(context).primaryColorLight,
         shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.only(
           topLeft: Radius.circular(20),
