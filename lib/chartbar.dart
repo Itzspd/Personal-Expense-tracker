@@ -22,7 +22,7 @@ class CharBar extends StatelessWidget {
             children: [
               FittedBox(
                 child: SizedBox(
-                  width: constraint.maxWidth * 0.1,
+                  width: constraint.maxWidth * 0.2,
                   child: Text(
                     label,
                     textAlign: TextAlign.left,
@@ -30,10 +30,11 @@ class CharBar extends StatelessWidget {
                   ),
                 ),
               ),
+
               //Bars
               SizedBox(
                   height: constraint.maxHeight * 0.3,
-                  width: constraint.maxWidth * 0.6,
+                  width: constraint.maxWidth * 0.5,
                   child: Stack(
                     children: [
                       Container(

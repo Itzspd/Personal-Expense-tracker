@@ -1,13 +1,22 @@
 import 'package:flutter/material.dart';
-import './home.dart';
 import 'package:flutter/services.dart';
+
+import 'package:device_preview/device_preview.dart';
+
+import './home.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
   ]);
-  runApp(MyApp());
+  runApp(DevicePreview(
+    enabled: true,
+    tools: const [
+      ...DevicePreview.defaultTools,
+    ],
+    builder: (context) => MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {

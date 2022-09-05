@@ -1,5 +1,9 @@
+import 'dart:io'; // Used to check which os platform i am on.
+
 import 'package:flutter/material.dart';
-import 'package:presonal_expence_tracker/chart.dart';
+import 'package:flutter/cupertino.dart';
+
+import './chart.dart';
 import './Model/transaction.dart';
 import './widgets/new_transactions.dart';
 import './widgets/transaction_list.dart';
@@ -56,41 +60,63 @@ class _HomeState extends State<Home> {
     });
   }
 
+  PreferredSizeWidget _buildadaptiveappbar() {
+    return Platform.isIOS
+        ? CupertinoNavigationBar(
+            middle: const Text(
+              'EXPENSE TRACKER',
+            ),
+            trailing: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                GestureDetector(
+                  onTap: () => _openbottomsheettoaddnewtransactions(context),
+                  child: const Icon(
+                    CupertinoIcons.add,
+                  ),
+                )
+              ],
+            ),
+          )
+        : AppBar(
+            centerTitle: true,
+            title: const Text(
+              'EXPENSE TRACKER',
+            ),
+            elevation: 0,
+            backgroundColor: Theme.of(context).primaryColor,
+            actions: [
+              IconButton(
+                onPressed: () => _openbottomsheettoaddnewtransactions(context),
+                icon: const Icon(
+                  Icons.add,
+                  size: 30,
+                  color: Colors.white,
+                ),
+              )
+            ],
+          ) as PreferredSizeWidget;
+  }
+
   @override
   Widget build(BuildContext context) {
     final mediaquery = MediaQuery.of(context);
-    final appbar = AppBar(
-      centerTitle: true,
-      title: const Text(
-        'EXPENSE TRACKER',
-      ),
-      elevation: 0,
-      backgroundColor: Theme.of(context).primaryColor,
-      actions: [
-        IconButton(
-          onPressed: () => _openbottomsheettoaddnewtransactions(context),
-          icon: const Icon(
-            Icons.add,
-            size: 30,
-            color: Colors.white,
-          ),
-        )
-      ],
-    );
-    return Scaffold(
-      backgroundColor: Theme.of(context).primaryColor,
-      appBar: appbar,
-      body: SingleChildScrollView(
+
+    final appbar = _buildadaptiveappbar();
+
+    final pagebody = SafeArea(
+      child: SingleChildScrollView(
         child: Column(
           children: [
             //Expense chart and chart bars.
             SizedBox(
-                //Deducting the height chart, the appbar height and the status bar height.
-                height: (mediaquery.size.height -
-                        appbar.preferredSize.height -
-                        mediaquery.padding.top) *
-                    0.4,
-                child: chart(_recenttransactions)),
+              //Deducting the height chart, the appbar height and the status bar height.
+              height: (mediaquery.size.height -
+                      appbar.preferredSize.height -
+                      mediaquery.padding.top) *
+                  0.4,
+              child: chart(_recenttransactions),
+            ),
             SizedBox(
               height: (mediaquery.size.height -
                       appbar.preferredSize.height -
@@ -110,16 +136,25 @@ class _HomeState extends State<Home> {
         ),
       ),
     );
+    return Platform.isIOS
+        ? CupertinoPageScaffold(
+            child: pagebody,
+          )
+        : Scaffold(
+            backgroundColor: Theme.of(context).primaryColor,
+            appBar: _buildadaptiveappbar() as PreferredSizeWidget,
+            body: pagebody);
   }
 
   void _openbottomsheettoaddnewtransactions(BuildContext context) {
     showModalBottomSheet(
         backgroundColor: Theme.of(context).primaryColorLight,
         shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(20),
-          topRight: Radius.circular(20),
-        )),
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(20),
+            topRight: Radius.circular(20),
+          ),
+        ),
         context: context,
         builder: (BuildContext contex) {
           return GestureDetector(
