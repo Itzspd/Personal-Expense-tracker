@@ -10,13 +10,9 @@ void main() {
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
   ]);
-  runApp(DevicePreview(
-    enabled: true,
-    tools: const [
-      ...DevicePreview.defaultTools,
-    ],
-    builder: (context) => MyApp(),
-  ));
+  runApp(
+    MyApp(),
+  );
 }
 
 class MyApp extends StatelessWidget {

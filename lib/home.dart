@@ -13,7 +13,9 @@ class Home extends StatefulWidget {
   State<Home> createState() => _HomeState();
 }
 
-class _HomeState extends State<Home> {
+//MIXIN
+//widgetBindingObserver is used to check for the appsate; paused, active,resume etc.
+class _HomeState extends State<Home> with WidgetsBindingObserver {
   //Transactions list of type Transactions
   final List<Transaction> _usertransactions = [
     /*Transaction(
@@ -96,6 +98,27 @@ class _HomeState extends State<Home> {
               )
             ],
           ) as PreferredSizeWidget;
+  }
+
+  @override
+  void initState() {
+    WidgetsBinding.instance.addObserver(this);
+    super.initState();
+  }
+
+//function to check the app_state.
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    print(state);
+
+    super.didChangeAppLifecycleState(state);
+  }
+
+//a dispose function to clear the appcycle listener.
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
   }
 
   @override
